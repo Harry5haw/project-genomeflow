@@ -4,6 +4,22 @@ FROM apache/airflow:2.8.1
 # Switch to the root user to install things
 USER root
 
+# Install FastQC and its Java dependency
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    msopenjdk-11 \
+    wget \
+    unzip \
+    libfreetype6 \
+     fontconfig && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN wget -q https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip -O /tmp/fastqc.zip && \
+    unzip /tmp/fastqc.zip -d /opt/ && \
+    rm /tmp/fastqc.zip && \
+    chmod +x /opt/FastQC/fastqc && \
+    ln -s /opt/FastQC/fastqc /usr/local/bin/fastqc
+
 # Create a directory for our requirements
 RUN mkdir -p /opt/airflow/requirements
 
