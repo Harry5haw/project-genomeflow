@@ -11,7 +11,10 @@ RUN apt-get update && \
     wget \
     unzip \
     libfreetype6 \
-     fontconfig && \
+    fontconfig \
+    bwa \
+    samtools \
+    bcftools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN wget -q https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip -O /tmp/fastqc.zip && \
